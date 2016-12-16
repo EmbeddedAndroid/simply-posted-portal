@@ -140,8 +140,8 @@ INSTALLED_APPS = [
 ]
 
 # Go to https://stripe.com/ and grab your keys and put here
-PINAX_STRIPE_SECRET_KEY = ""  # begins with sk_
-PINAX_STRIPE_PUBLIC_KEY = ""  # beings with pk_
+PINAX_STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "your test public key")
+PINAX_STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "your test secret key")
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
