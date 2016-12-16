@@ -1,4 +1,4 @@
-# simply_posted_portal
+# Simply Posted Portal
 
 ## Getting Started
 
