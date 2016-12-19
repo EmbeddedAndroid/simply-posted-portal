@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block head_title %}pinax-project-account{% endblock %}
+{% block head_title %}SimplyPosted Portal | Real Estate Social Media Management{% endblock %}
 
 {% block body_class %}home{% endblock %}
 
@@ -10,68 +10,48 @@
     <section class="jumbotron">
         <div class="container">
             {% include "_messages.html" %}
-            <h1>{% blocktrans %}Welcome to<br>pinax-project-account{% endblocktrans %}</h1>
-            <p>
+            <h1 class="text-center">{% blocktrans %}Social Media Marketing
+Built For <br>Real Estate Professionals{% endblocktrans %}</h1>
+            <p class="text-center">
                 {% blocktrans %}
-                In addition to what is provided by the "zero" project, this project
-                provides thorough integration with django-user-accounts, adding
-                comprehensive account management functionality. It is a foundation
-                suitable for most sites that have user accounts.
+                We'll amplify your Brokerage's reach through Social Media. Team with partners, employees, influencers and other brand advocates and distribute your content out through their social networks.
                 {% endblocktrans %}
             </p>
             {% if not user.is_authenticated %}
             {% url "account_login" as login_url %}
             {% url "account_signup" as signup_url %}
-            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-default">Log In</a> or <a href="{{ signup_url }}" class="btn btn-primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
+            <p class="text-center">{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-default">Log In</a> or <a href="{{ signup_url }}" class="btn btn-primary">Sign Up</a> to manage your service.{% endblocktrans %}</p>
             {% endif %}
         </div>
     </section>
     <section>
         <div class="container">
-            <h2 class="text-center">{% blocktrans %}What is Pinax?{% endblocktrans %}</h2>
-            <p class="lead">
+            <h2 class="text-center">{% blocktrans %}Daily Social Media Posts{% endblocktrans %}</h2>
+            <p class="text-center">
                 {% blocktrans %}
-                <b>Pinax</b> is an open-source platform based on Django and
-                intended to provide a starting point for websites. It takes
-                care of the things that many sites have in common, so you can
-                focus on what makes your site different.
+                Let us handle your social media so you can spend your time where it matters, with your clients.
                 {% endblocktrans %}
             </p>
             <div class="feature-columns">
                 <div>
-                    <i class="fa fa-cubes fa-3x"></i><br>
+                    <img src='/site_media/static/content.png'>
                     {% blocktrans %}
-                    <b>Starter projects</b> provide project layout,
-                    scaffolding, already integrated components and
-                    ready-to-go code.
+                    <h1>Engaging Content</h1> Our team posts engaging content related to the Mortgage & Real Estate industries so people start talking about your services.
                     {% endblocktrans %}
                 </div>
                 <div>
-                    <i class="fa fa-puzzle-piece fa-3x"></i><br>
+                    <img src='/site_media/static/time.png'>
                     {% blocktrans %}
-                    <b>Reusable apps</b> provide common
-                    infrastructure, back-end functionality,
-                    and user-facing components.
+                    <h1>We Save You Time</h1> Regular postings happen without you worrying about a thing! We determine best times to post & engage with prospects.
                     {% endblocktrans %}
                 </div>
                 <div>
-                    <i class="fa fa-tint fa-3x"></i><br>
+                    <img src='/site_media/static/analytics.png'>
                     {% blocktrans %}
-                    <b>Themes</b> provide default templates and
-                    stylesheets for quick prototyping and easy customization.
+                    <h1>Sophisticated Analytics</h1> It's not enough to only measure social likes and comments. Data from your social channels is displayed on a simple and intuitive dashboard.
                     {% endblocktrans %}
                 </div>
             </div>
-        </div>
-    </section>
-    <section>
-        <div class="container">
-            <p class="lead text-center">
-                {% blocktrans %}
-                See <a href="http://pinaxproject.com/">pinaxproject.com</a>
-                for more information.
-                {% endblocktrans %}
-            </p>
         </div>
     </section>
 {% endblock %}
