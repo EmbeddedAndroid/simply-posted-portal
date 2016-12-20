@@ -138,6 +138,7 @@ INSTALLED_APPS = [
 
     # project
     "simply_posted_portal",
+    "simply_posted_accounts"
 ]
 
 # Go to https://stripe.com/ and grab your keys and put here
@@ -187,6 +188,8 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 ACCOUNT_USE_AUTH_AUTHENTICATE = True
 ACCOUNT_USER_DISPLAY = lambda user: user.email
+
+AUTH_PROFILE_MODULE = "simply_posted_account.UserProfile"
 
 AUTHENTICATION_BACKENDS = [
     "account.auth_backends.EmailAuthenticationBackend",
