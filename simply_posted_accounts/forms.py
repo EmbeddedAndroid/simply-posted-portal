@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from account.conf import settings
 import account.forms
 
 try:
@@ -9,16 +10,6 @@ except ImportError:
 
 
 class SignupForm(account.forms.SignupForm):
-
-    company = forms.CharField(
-        label=_("Company"),
-        max_length=30,
-        widget=forms.TextInput(), required=True)
-
-    website = forms.CharField(
-        label=_("Website"),
-        max_length=50,
-        widget=forms.TextInput(), required=True)
 
     first_name = forms.CharField(
         label=_("First Name"),
@@ -30,10 +21,16 @@ class SignupForm(account.forms.SignupForm):
         max_length=30,
         widget=forms.TextInput(), required=True)
 
+    timezone = forms.ChoiceField(
+        label=_("Timezone"),
+        choices=[("", "---------")] + settings.ACCOUNT_TIMEZONES,
+        required=True)
+
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
         del self.fields["username"]
-        field_order = ["company", "website", "first_name", "last_name", "email", "password", "password_confirm", "code"]
+        field_order = ["first_name", "last_name", "email", "password",
+                       "password_confirm", "timezone", "code"]
         if not OrderedDict or hasattr(self.fields, "keyOrder"):
             self.fields.keyOrder = field_order
         else:
