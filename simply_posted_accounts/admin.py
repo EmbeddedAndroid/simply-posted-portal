@@ -1,4 +1,5 @@
 from django.contrib import admin
-from simply_posted_accounts.models import UserProfile, UserProfileAdmin
+from simply_posted_accounts.models import User, UserAdmin
 
-admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
