@@ -20,6 +20,7 @@ class SignupView(account.views.SignupView):
 
     def create_profile(self, form):
         profile = self.created_user.profile
+        profile.company = form.cleaned_data["company"]
         profile.email = form.cleaned_data["email"]
         profile.first_name = form.cleaned_data["first_name"]
         profile.last_name = form.cleaned_data["last_name"]

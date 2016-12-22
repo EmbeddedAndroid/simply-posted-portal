@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
+    company = models.CharField(max_length=50)
     email = models.EmailField()
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -17,4 +18,5 @@ class UserProfile(models.Model):
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('email', 'user', 'first_name', 'last_name')
+    list_display = ('email', 'company', 'first_name',
+                    'last_name', 'user')
