@@ -72,19 +72,32 @@ class VoiceView(LoginRequiredMixin, FormView):
 
     def get_initial(self):
         initial = super(VoiceView, self).get_initial()
-        if self.request.user.profile.voice:
-            initial["business_type"] = self.request.user.profile.voice.business_type
+        if self.request.user.profile.business_type:
+            initial["business_type"] = self.request.user.profile.business_type
+        if self.request.user.profile.market_type:
+            initial["market_type"] = self.request.user.profile.market_type
+        if self.request.user.profile.temp_type:
+            initial["temp_type"] = self.request.user.profile.temp_type
+        if self.request.user.profile.about_business:
+            initial["about_business"] = self.request.user.profile.about_business
+        if self.request.user.profile.about_business:
+            initial["about_topics"] = self.request.user.profile.about_topics
         return initial
 
     def update_voice(self, form):
-        fields = {}
+        profile = self.request.user.profile
         if "business_type" in form.cleaned_data:
-            fields["business_type"] = form.cleaned_data["business_type"]
-        if fields:
-            voice = self.request.user.profile.voice
-            for k, v in fields.items():
-                setattr(account, k, v)
-            voice.save()
+            profile.business_type = form.cleaned_data["business_type"]
+        if "market_type" in form.cleaned_data:
+           profile.market_type = form.cleaned_data["market_type"]
+        if "temp_type" in form.cleaned_data:
+            profile.temp_type = form.cleaned_data["temp_type"]
+        if "about_business" in form.cleaned_data:
+            profile.about_business = form.cleaned_data["about_business"]
+        if "about_topics" in form.cleaned_data:
+            profile.about_topics = form.cleaned_data["about_topics"]
+        profile.save()
+
 
     def form_valid(self, form):
         self.update_voice(form)
