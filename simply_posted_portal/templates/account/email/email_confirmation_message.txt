@@ -8,5 +8,13 @@ You now have a user account with us and we look forward to helping you grow your
 
 {{ activate_url }}
 
-If you need help or support, please do not hesitate to call, text, email or even tweet us when you are in need!
+If you need help or support, please do not hesitate to call, text, email or maybe even tweet us when you are in need! Thanks again for believing in our mission and welcome!
+
+--
+*SimplyPosted Support*
+*"Social Media, Done For You"*
+tel: 855-946-4567
+www.gosimplyposted.com
+@gosimplyposted
+
 {% endblocktrans %}
