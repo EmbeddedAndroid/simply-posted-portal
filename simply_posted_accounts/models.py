@@ -25,7 +25,6 @@ temp_type_choices = (
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
     company = models.CharField(max_length=50)
-    email = models.EmailField()
     business_type = models.CharField(max_length=50)
     market_type = models.CharField(max_length=50)
     temp_type = models.CharField(max_length=50)

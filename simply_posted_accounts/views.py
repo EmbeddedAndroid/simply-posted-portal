@@ -30,7 +30,6 @@ class SignupView(account.views.SignupView):
         self.created_user.save()
         profile = self.created_user.profile
         profile.company = form.cleaned_data["company"]
-        profile.email = form.cleaned_data["email"]
         profile.save()
 
     def set_timezone(self,form):
