@@ -6,6 +6,15 @@
 
 {% block subnav %}
 <div class="panel panel-default">
+    <div class="panel-heading"><strong>{% trans "Social" %}</strong></div>
+    <div class="list-group">
+        <a class="list-group-item account-posting-schedule" href="{% url "account_settings" %}">
+            {% trans "Posting Schedule" %}
+        </a>
+        <a class="list-group-item account-social-profiles" href="{% url "voice_settings" %}">
+            {% trans "Social Profiles" %}
+        </a>
+    </div>
     <div class="panel-heading"><strong>{% trans "Settings" %}</strong></div>
     <div class="list-group">
         <a class="list-group-item account-settings" href="{% url "account_settings" %}">
