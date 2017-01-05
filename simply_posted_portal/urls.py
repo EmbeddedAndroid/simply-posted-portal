@@ -11,6 +11,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
     url(r"^admin/", include(admin.site.urls)),
+    url(r"^account/confirm_email/(?P<key>\w+)/$", simply_posted_accounts.views.ConfirmEmailView.as_view(), name="account_confirm_email"),
     url(r"^account/voice/$", simply_posted_accounts.views.VoiceView.as_view(), name="voice_settings"),
     url(r"^account/signup/$", simply_posted_accounts.views.SignupView.as_view(template_name="account/signup.html"), name="account_signup"),
     url(r"^account/login/$", simply_posted_accounts.views.LoginView.as_view(), name="account_signup"),

@@ -24,6 +24,8 @@ temp_type_choices = (
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
+    social_report_project_id = models.CharField(max_length=50)
+    social_report_user_id = models.CharField(max_length=50)
     company = models.CharField(max_length=50)
     business_type = models.CharField(max_length=50)
     market_type = models.CharField(max_length=50)

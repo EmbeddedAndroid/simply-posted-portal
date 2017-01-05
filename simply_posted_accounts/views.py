@@ -9,6 +9,9 @@ from django.utils.translation import ugettext_lazy as _
 import account.forms
 import account.views
 import simply_posted_accounts.forms
+import requests
+import json
+import time
 
 
 class LoginView(account.views.LoginView):
@@ -128,3 +131,134 @@ class VoiceView(LoginRequiredMixin, FormView):
             fallback_url = settings.VOICE_SETTINGS_REDIRECT_URL
         kwargs.setdefault("redirect_field_name", self.get_redirect_field_name())
         return default_redirect(self.request, fallback_url, **kwargs)
+
+
+class ConfirmEmailView(account.views.ConfirmEmailView):
+
+    def create_social_report_user(self, confirmation):
+        user = confirmation.email_address.user
+        create_user_url = 'https://api.socialreport.com/projectAddUser.svc'
+        headers = {
+            'api_key': settings.SOCIAL_REPORT_API_TOKEN,
+            'Content-Type': 'application/json'
+        }
+        params = {
+            'project': user.profile.social_report_project_id,
+            'email': user.email,
+            'firstName': user.first_name,
+            'lastName': user.last_name,
+            'company': user.profile.company,
+            'password': user.password[0:10],
+            'active': 'yes',
+            'accounts': 'yes',
+            'addAccount': 'yes',
+            'agents': 'no',
+            'campaigns': 'no',
+            'publish': 'no_approve',
+            'publication_review': 'no',
+            'contacts': 'no',
+            'export': 'no',
+            'goals': 'no',
+            'reports': 'no',
+            'api': 'no',
+            'notifications': 'no',
+            'automations': 'no',
+            'users': 'no'
+        }
+        retry = True
+        while retry:
+            response = requests.post(create_user_url, params=params, headers=headers)
+            if response.status_code == requests.codes.ok:
+                data = response.json()
+                if type(data) == type(dict()):
+                    if 'id' in data:
+                        user.profile.social_report_user_id = item['id']
+                        user.profile.save()
+                        retry = False
+                    elif 'error' in data:
+                        if data['error'] == 'going to fast, one call per second is allowed':
+                            print "API request too fast, retrying..."
+                            time.sleep(0.5)
+                        else:
+                            # TODO Log this somewhere
+                            print data['error']
+                            retry = False
+                    else:
+                        # TODO Log this somewhere
+                        print data
+                        retry = False
+                elif type(data) == type(list()):
+                    for item in data:
+                        if 'id' in item:
+                            user.profile.social_report_user_id = item['id']
+                            user.profile.save()
+                            retry = False
+                        elif 'error' in item:
+                            if item['error'] == 'going to fast, one call per second is allowed':
+                                print "API request too fast, retrying..."
+                                time.sleep(.5)
+                            else:
+                                # TODO Log this somewhere
+                                print item['error']
+                                retry = False
+                else:
+                    # TODO Log this somewhere
+                    print type(data)
+                    retry = False
+
+    def create_social_report_project(self, confirmation):
+        user = confirmation.email_address.user
+        create_project_url = 'https://api.socialreport.com/projectCreate.svc'
+        headers = {
+            'api_key': settings.SOCIAL_REPORT_API_TOKEN,
+            'Content-Type': 'application/json'
+        }
+        params = {
+            'name': user.profile.company,
+            'timezone': user.account.timezone
+        }
+        retry = True
+        while retry:
+            response = requests.post(create_project_url, params=params, headers=headers)
+            if response.status_code == requests.codes.ok:
+                data = response.json()
+                if type(data) == type(dict()):
+                    if 'id' in data:
+                        user.profile.social_report_project_id = item['id']
+                        user.profile.save()
+                        retry = False
+                    elif 'error' in data:
+                        if data['error'] == 'going to fast, one call per second is allowed':
+                            print "API request too fast, retrying..."
+                            time.sleep(0.5)
+                        else:
+                            # TODO Log this somewhere
+                            print data['error']
+                            retry = False
+                    else:
+                        # TODO Log this somewhere
+                        print data
+                        retry = False
+                elif type(data) == type(list()):
+                    for item in data:
+                        if 'id' in item:
+                            user.profile.social_report_project_id = item['id']
+                            user.profile.save()
+                            retry = False
+                        elif 'error' in item:
+                            if item['error'] == 'going to fast, one call per second is allowed':
+                                print "API request too fast, retrying..."
+                                time.sleep(.5)
+                            else:
+                                # TODO Log this somewhere
+                                print item['error']
+                                retry = False
+                else:
+                    # TODO Log this somewhere
+                    print type(data)
+                    retry = False
+
+    def after_confirmation(self, confirmation):
+        super(ConfirmEmailView, self).after_confirmation(confirmation)
+        self.create_social_report_project(confirmation)
+        self.create_social_report_user(confirmation)

@@ -198,6 +198,8 @@ VOICE_SETTINGS_REDIRECT_URL = '/account/voice/'
 
 AUTH_PROFILE_MODULE = "simply_posted_account.UserProfile"
 
+SOCIAL_REPORT_API_TOKEN = os.environ.get("SOCIAL_REPORT_API_TOKEN")
+
 AUTHENTICATION_BACKENDS = [
     "account.auth_backends.EmailAuthenticationBackend",
 ]
