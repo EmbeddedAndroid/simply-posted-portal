@@ -25,6 +25,7 @@ class SignupView(account.views.SignupView):
 
     def after_signup(self, form):
         self.create_profile(form)
+        self.set_timezone(form)
         super(SignupView, self).after_signup(form)
 
     def create_profile(self, form):
@@ -39,15 +40,15 @@ class SignupView(account.views.SignupView):
         fields = {}
         fields["timezone"] = form.cleaned_data["timezone"]
         if fields:
-            account = self.request.user.account
+            account = self.created_user.account
             for k, v in fields.items():
                 setattr(account, k, v)
             account.save()
 
-    def form_valid(self, form):
-        super(SignupView, self).form_valid(form)
-        self.set_timezone(form)
-        return redirect(self.get_success_url())
+    # def form_valid(self, form):
+    #     super(SignupView, self).form_valid(form)
+    #     self.set_timezone(form)
+    #     return redirect(self.get_success_url())
 
     def generate_username(self, form):
         return form.cleaned_data["email"]
