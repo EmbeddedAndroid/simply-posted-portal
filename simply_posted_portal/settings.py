@@ -135,6 +135,9 @@ INSTALLED_APPS = [
     "pinax.eventlog",
     "pinax.stripe",
     "pinax.webanalytics",
+    "filer",
+    "easy_thumbnails",
+    "calendarium",
 
     # project
     "simply_posted_portal",
@@ -190,7 +193,7 @@ THEME_CONTACT_EMAIL = "support@gosimplyposted.com"
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
-ACCOUNT_LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGIN_REDIRECT_URL = "calendar_current_month"
 ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 ACCOUNT_USE_AUTH_AUTHENTICATE = True
