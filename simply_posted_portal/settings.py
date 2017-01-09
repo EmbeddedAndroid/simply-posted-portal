@@ -97,6 +97,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "account.context_processors.account",
                 "pinax_theme_bootstrap.context_processors.theme",
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect"
             ],
         },
     },
@@ -110,6 +112,7 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
 ROOT_URLCONF = "simply_posted_portal.urls"
@@ -138,6 +141,7 @@ INSTALLED_APPS = [
     "filer",
     "easy_thumbnails",
     "calendarium",
+    "social_django",
 
     # project
     "simply_posted_portal",
@@ -199,6 +203,30 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 ACCOUNT_USE_AUTH_AUTHENTICATE = True
 ACCOUNT_USER_DISPLAY = lambda user: user.email
 
+LOGIN_REDIRECT_URL = "social_profiles_settings"
+
+# Twitter Authentication
+SOCIAL_AUTH_TWITTER_KEY = os.environ.get("SOCIAL_AUTH_TWITTER_KEY")
+SOCIAL_AUTH_TWITTER_SECRET = os.environ.get("SOCIAL_AUTH_TWITTER_SECRET")
+
+# Facebook Authentication
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("SOCIAL_AUTH_FACEBOOK_KEY")
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("SOCIAL_AUTH_FACEBOOK_SECRET")
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [('first_name', 'first_name'), ('last_name', 'last_name')]
+
+# Instagram Authentication
+SOCIAL_AUTH_INSTAGRAM_KEY = os.environ.get("SOCIAL_AUTH_INSTAGRAM_KEY")
+SOCIAL_AUTH_INSTAGRAM_SECRET = os.environ.get("SOCIAL_AUTH_INSTAGRAM_SECRET")
+SOCIAL_AUTH_INSTAGRAM_EXTRA_DATA = [('username', 'username')]
+
+# Linkedin Authentication
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY")
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET")
+
+# Pintrest Authentication
+SOCIAL_AUTH_PINTREST_KEY = os.environ.get("SOCIAL_AUTH_PINTREST_KEY")
+SOCIAL_AUTH_PINTREST_SECRET = os.environ.get("SOCIAL_AUTH_PINTREST_SECRET")
+
 VOICE_SETTINGS_REDIRECT_URL = '/account/voice/'
 
 AUTH_PROFILE_MODULE = "simply_posted_account.UserProfile"
@@ -206,5 +234,10 @@ AUTH_PROFILE_MODULE = "simply_posted_account.UserProfile"
 SOCIAL_REPORT_API_TOKEN = os.environ.get("SOCIAL_REPORT_API_TOKEN")
 
 AUTHENTICATION_BACKENDS = [
+    "social_core.backends.twitter.TwitterOAuth",
+    "social_core.backends.facebook.FacebookOAuth2",
+    "social_core.backends.instagram.InstagramOAuth2",
+    "social_core.backends.linkedin.LinkedinOAuth2",
+    "social_core.backends.pinterest.PinterestOAuth2",
     "account.auth_backends.EmailAuthenticationBackend",
 ]

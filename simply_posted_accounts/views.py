@@ -2,17 +2,56 @@ from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from account.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.shortcuts import render
+from django.utils.translation import ugettext_lazy as _
 from account.utils import default_redirect
 from account.conf import settings
 from account.models import EmailAddress
-from django.utils.translation import ugettext_lazy as _
+from social_django.models import UserSocialAuth
 import account.forms
 import account.views
 import simply_posted_accounts.forms
 import requests
-import json
 import time
 
+def social_profile_settings(request):
+    user = request.user
+
+    try:
+        pinterest_login = user.social_auth.get(provider='pinterest')
+    except UserSocialAuth.DoesNotExist:
+        pinterest_login = None
+
+    try:
+        linkedin_login = user.social_auth.get(provider='linkedin-oauth2')
+    except UserSocialAuth.DoesNotExist:
+        linkedin_login = None
+
+    try:
+        instagram_login = user.social_auth.get(provider='instagram')
+    except UserSocialAuth.DoesNotExist:
+        instagram_login = None
+
+    try:
+        twitter_login = user.social_auth.get(provider='twitter')
+    except UserSocialAuth.DoesNotExist:
+        twitter_login = None
+
+    try:
+        facebook_login = user.social_auth.get(provider='facebook')
+    except UserSocialAuth.DoesNotExist:
+        facebook_login = None
+
+    can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
+
+    return render(request, 'account/social.html', {
+        'pinterest_login': pinterest_login,
+        'linkedin_login': linkedin_login,
+        'instagram_login': instagram_login,
+        'twitter_login': twitter_login,
+        'facebook_login': facebook_login,
+        'can_disconnect': can_disconnect
+    })
 
 class LoginView(account.views.LoginView):
 
@@ -44,11 +83,6 @@ class SignupView(account.views.SignupView):
             for k, v in fields.items():
                 setattr(account, k, v)
             account.save()
-
-    # def form_valid(self, form):
-    #     super(SignupView, self).form_valid(form)
-    #     self.set_timezone(form)
-    #     return redirect(self.get_success_url())
 
     def generate_username(self, form):
         return form.cleaned_data["email"]

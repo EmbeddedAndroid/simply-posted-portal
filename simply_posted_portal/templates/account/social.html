@@ -12,24 +12,51 @@
         <div class="col-md-5 animated animated-sm bounceInUp">
             <legend>{% trans "Social Profiles" %}</legend>
             <h2><small>Manage your social media profiles</small></h2>
-            <a class="btn btn-block btn-social btn-facebook">
-                <span class="fa fa-facebook"></span> Link your Facebook Account
-            </a>
-            <a class="btn btn-block btn-social btn-twitter">
-                <span class="fa fa-twitter"></span> Link your Twitter Account
-            </a>
-            <a class="btn btn-block btn-social btn-instagram">
-                <span class="fa fa-instagram"></span> Link your Instagram Account
-            </a>
-            <a class="btn btn-block btn-social btn-linkedin">
-                <span class="fa fa-linkedin"></span> Link your Linkedin Account
-            </a>
-            <a class="btn btn-block btn-social btn-pinterest">
-                <span class="fa fa-pinterest"></span> Link your Pintrest Account
-            </a>
-            <a class="btn btn-block btn-social btn-google">
-                <span class="fa fa-google"></span> Link your Google+ Account
-            </a>
+            {% if facebook_login %}
+                <a class="btn btn-block btn-social btn-facebook">
+                    <span class="fa fa-facebook"></span> Connected as {{ facebook_login.extra_data.first_name }} {{ facebook_login.extra_data.last_name }}
+                </a>
+            {% else %}
+                <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
+                    <span class="fa fa-facebook"></span> Link your Facebook Account
+                </a>
+            {% endif %}
+            {% if twitter_login %}
+                <a class="btn btn-block btn-social btn-twitter">
+                    <span class="fa fa-twitter"></span> Connected as @{{ twitter_login.extra_data.access_token.screen_name }}
+                </a>
+            {% else %}
+                <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-social btn-twitter">
+                    <span class="fa fa-twitter"></span> Link your Twitter Account
+                </a>
+            {% endif %}
+            {%  if instagram_login %}
+                <a class="btn btn-block btn-social btn-instagram">
+                    <span class="fa fa-instagram"></span> Connected as {{ instagram_login.extra_data.username }}
+                </a>
+            {% else %}
+                <a href="{% url 'social:begin' 'instagram' %}" class="btn btn-block btn-social btn-instagram">
+                    <span class="fa fa-instagram"></span> Link your Instagram Account
+                </a>
+            {% endif %}
+            {% if linkedin_login %}
+                <a class="btn btn-block btn-social btn-linkedin">
+                    <span class="fa fa-linkedin"></span> Connected as {{ linkedin_login.extra_data.first_name }} {{ linkedin_login.extra_data.last_name }}
+                </a>
+            {% else %}
+                <a href="{% url 'social:begin' 'linkedin-oauth2' %}" class="btn btn-block btn-social btn-linkedin">
+                    <span class="fa fa-linkedin"></span> Link your Linkedin Account
+                </a>
+            {% endif %}
+            {% if pinterest_login %}
+                <a class="btn btn-block btn-social btn-pinterest">
+                    <span class="fa fa-pinterest"></span> Connected as
+                </a>
+            {% else %}
+                <a href="{% url 'social:begin' 'pinterest' %}" class="btn btn-block btn-social btn-pinterest">
+                    <span class="fa fa-pinterest"></span> Link your Pintrest Account
+                </a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
