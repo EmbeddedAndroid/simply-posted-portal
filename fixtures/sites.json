@@ -3,16 +3,16 @@
         "pk": 1,
         "model": "sites.site",
         "fields": {
-            "domain": "virtio.us:8000",
-            "name": "gosimplyposted.com [localhost]"
+            "domain": "simplyposted.co",
+            "name": "simplyposted.co [localhost]"
         }
     },
     {
         "pk": 2,
         "model": "sites.site",
         "fields": {
-            "domain": "gosimplyposted.com",
-            "name": "gosimplyposted.com"
+            "domain": "simplyposted.co",
+            "name": "simplyposted.co"
         }
     }
 ]
