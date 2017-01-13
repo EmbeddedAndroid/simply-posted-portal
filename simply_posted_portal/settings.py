@@ -7,12 +7,24 @@ BASE_DIR = PACKAGE_ROOT
 
 DEBUG = True
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "dev.db",
+if os.environ.get("DEPLOYMENT") == "production":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'simply_posted_portal',
+            'USER': 'simplyposted',
+            'PASSWORD': os.environ.get("POSTGRESQL_PASSWORD"),
+            'HOST': 'simply-posted-postgresql',
+            'PORT': '',
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "dev.db",
+        }
+    }
 
 ALLOWED_HOSTS = []
 
