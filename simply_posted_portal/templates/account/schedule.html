@@ -13,12 +13,12 @@
 
 {% block body_class %}account account-posting-schedule{% endblock %}
 
-{% block head_title %}{% trans "Posting Schedule" %}{% endblock %}
+{% block head_title %}{% trans "Calendar" %}{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-lg-10">
-            <legend>{% trans "Posting Schedule" %}</legend>
+            <legend>{% trans "Calendar" %}</legend>
             <div id="calendar" class="animated animated-sm bounceInUp">
                 <h2><small>Manage your social media publications for {{ date|date:"F Y" }}</small></h2>
                 <form action="." method="post">
